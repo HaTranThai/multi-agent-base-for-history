@@ -85,13 +85,13 @@ const FormattedText = ({ text }) => {
               overflow: 'hidden'
             }}>
               <thead>
-                <tr style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
+                <tr style={{ background: '#1a1a1a', color: 'white' }}>
                   {headers.map((header, i) => (
                     <th key={i} style={{
                       padding: '12px 10px',
                       textAlign: 'left',
                       fontWeight: '600',
-                      borderRight: i < headers.length - 1 ? '1px solid rgba(255,255,255,0.2)' : 'none'
+                      borderRight: i < headers.length - 1 ? '1px solid rgba(255,255,255,0.1)' : 'none'
                     }}>
                       {header}
                     </th>
@@ -101,14 +101,14 @@ const FormattedText = ({ text }) => {
               <tbody>
                 {bodyRows.map((row, i) => (
                   <tr key={i} style={{
-                    background: i % 2 === 0 ? '#f8f9ff' : 'white',
+                    background: i % 2 === 0 ? '#f8f8f8' : 'white',
                     transition: 'background 0.2s'
                   }}>
                     {row.map((cell, j) => (
                       <td key={j} style={{
                         padding: '10px',
-                        borderRight: j < row.length - 1 ? '1px solid #e2e8f0' : 'none',
-                        borderBottom: i < bodyRows.length - 1 ? '1px solid #e2e8f0' : 'none',
+                        borderRight: j < row.length - 1 ? '1px solid #e0e0e0' : 'none',
+                        borderBottom: i < bodyRows.length - 1 ? '1px solid #e0e0e0' : 'none',
                         lineHeight: '1.6',
                         verticalAlign: 'top'
                       }}>
