@@ -12,7 +12,7 @@ const FormattedText = ({ text }) => {
         const parts = line.split('**');
         return (
           <p key={i} style={{ margin: '8px 0' }}>
-            {parts.map((part, j) => 
+            {parts.map((part, j) =>
               j % 2 === 1 ? <strong key={j}>{part}</strong> : part
             )}
           </p>
@@ -60,7 +60,7 @@ const FormattedText = ({ text }) => {
       // Parse table
       const rows = tableLines
         .filter(line => line.trim() && !line.includes('---'))
-        .map(line => 
+        .map(line =>
           line.split('|')
             .map(cell => cell.trim())
             .filter(cell => cell)
@@ -186,9 +186,9 @@ function App() {
           const chunkSize = Math.floor(Math.random() * 3) + 1; // 1-3 ký tự mỗi lần
           const nextChunk = fullText.slice(currentIndex, currentIndex + chunkSize);
           currentIndex += chunkSize;
-          
+
           setStreamingText((prev) => prev + nextChunk);
-          
+
           // Update message cuối cùng
           setMessages((prev) => {
             const newMessages = [...prev];
@@ -203,7 +203,7 @@ function App() {
           clearInterval(streamInterval);
           setIsStreaming(false);
           setStreamingText("");
-          
+
           // Finalize message
           setMessages((prev) => {
             const newMessages = [...prev];
