@@ -22,7 +22,7 @@
 
 /* Khung chat trắng đen */
 .chat-window {
-  width: 920px;
+  width: 1300px;
   max-width: 95vw;
   height: 92vh;
   background: #ffffff;
@@ -162,6 +162,19 @@
 .bubble.bot li {
   margin: 4px 0;
   line-height: 1.6;
+}
+
+/* Streaming cursor animation */
+.streaming-cursor {
+  display: inline-block;
+  color: #1a1a1a;
+  animation: blink 1s infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 /* Table styles */

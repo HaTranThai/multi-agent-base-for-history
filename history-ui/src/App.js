@@ -133,6 +133,8 @@ function App() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState("");
+  const [streamingText, setStreamingText] = useState(""); // Text đang stream
+  const [isStreaming, setIsStreaming] = useState(false); // Đang stream hay không
 
   // Tạo hoặc lấy session_id khi component mount
   useEffect(() => {
@@ -167,17 +169,62 @@ function App() {
         question: question,
       });
 
-      const botMsg = { sender: "bot", text: res.data.answer };
-      setMessages((prev) => [...prev, botMsg]);
+      // Bắt đầu streaming effect
+      const fullText = res.data.answer;
+      setLoading(false);
+      setIsStreaming(true);
+      setStreamingText("");
+
+      // Thêm placeholder message để render streaming
+      const botMsgIndex = messages.length + 1;
+      setMessages((prev) => [...prev, { sender: "bot", text: "", isStreaming: true }]);
+
+      // Stream từng ký tự
+      let currentIndex = 0;
+      const streamInterval = setInterval(() => {
+        if (currentIndex < fullText.length) {
+          const chunkSize = Math.floor(Math.random() * 3) + 1; // 1-3 ký tự mỗi lần
+          const nextChunk = fullText.slice(currentIndex, currentIndex + chunkSize);
+          currentIndex += chunkSize;
+          
+          setStreamingText((prev) => prev + nextChunk);
+          
+          // Update message cuối cùng
+          setMessages((prev) => {
+            const newMessages = [...prev];
+            newMessages[newMessages.length - 1] = {
+              sender: "bot",
+              text: fullText.slice(0, currentIndex),
+              isStreaming: true
+            };
+            return newMessages;
+          });
+        } else {
+          clearInterval(streamInterval);
+          setIsStreaming(false);
+          setStreamingText("");
+          
+          // Finalize message
+          setMessages((prev) => {
+            const newMessages = [...prev];
+            newMessages[newMessages.length - 1] = {
+              sender: "bot",
+              text: fullText,
+              isStreaming: false
+            };
+            return newMessages;
+          });
+        }
+      }, 20); // 20ms mỗi lần update (nhanh và mượt)
+
     } catch (e) {
       console.error("API Error:", e);
+      setLoading(false);
       setMessages((prev) => [
         ...prev,
         { sender: "bot", text: "⚠️ Lỗi kết nối API!" },
       ]);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -198,7 +245,10 @@ function App() {
               className={`bubble ${msg.sender === "user" ? "user" : "bot"}`}
             >
               {msg.sender === "bot" ? (
-                <FormattedText text={msg.text} />
+                <>
+                  <FormattedText text={msg.text} />
+                  {msg.isStreaming && <span className="streaming-cursor">▋</span>}
+                </>
               ) : (
                 msg.text
               )}
