@@ -183,7 +183,7 @@ function App() {
       let currentIndex = 0;
       const streamInterval = setInterval(() => {
         if (currentIndex < fullText.length) {
-          const chunkSize = Math.floor(Math.random() * 3) + 1; // 1-3 ký tự mỗi lần
+          const chunkSize = Math.floor(Math.random() * 5) + 1; // 1-3 ký tự mỗi lần
           const nextChunk = fullText.slice(currentIndex, currentIndex + chunkSize);
           currentIndex += chunkSize;
 
@@ -232,7 +232,19 @@ function App() {
       <div className="chat-window">
 
         <div className="header">
-          <h2 className="header-title">📚 Lịch sử AI</h2>
+          <h2 className="header-title">
+            <img
+              src="/vintage_history_logo.png"
+              alt="History Logo"
+              style={{
+                width: '40px',
+                height: '40px',
+                marginRight: '10px',
+                verticalAlign: 'middle'
+              }}
+            />
+            Lịch sử AI
+          </h2>
           <button className="clear-btn" onClick={clearChat} title="Bắt đầu cuộc trò chuyện mới">
             🗑️ Xóa
           </button>
